@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="max-age=31536000">
     <title>Will You Be My Valentine? 💕</title>
     <style>
         * {
@@ -17,9 +18,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #6a7bb8;
             overflow: hidden;
             position: relative;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
         }
 
         /* Animated hearts background */
@@ -36,8 +43,15 @@
         .heart {
             position: absolute;
             font-size: 2rem;
-            animation: float 15s infinite;
-            opacity: 0.3;
+            opacity: 0.2;
+            will-change: transform;
+        }
+
+        @media (min-width: 768px) {
+            .heart {
+                animation: float 15s infinite;
+                opacity: 0.3;
+            }
         }
 
         @keyframes float {
@@ -58,13 +72,19 @@
             background: rgba(255, 255, 255, 0.95);
             padding: 3rem 2rem;
             border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
             max-width: 600px;
             width: 90%;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(10px);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                backdrop-filter: blur(10px);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
         }
 
         h1 {
@@ -72,7 +92,12 @@
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                animation: pulse 2s ease-in-out infinite;
+            }
         }
 
         @keyframes pulse {
@@ -116,10 +141,16 @@
         }
 
         #yesBtn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #f5576c;
             color: white;
             padding: 1rem 2rem;
             min-width: 140px;
+        }
+
+        @media (min-width: 768px) {
+            #yesBtn {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            }
         }
 
         #yesBtn:hover, #yesBtn:active {
@@ -128,10 +159,16 @@
         }
 
         #noBtn {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: #fed6e3;
             color: #666;
             padding: 1rem 2rem;
             min-width: 160px;
+        }
+
+        @media (min-width: 768px) {
+            #noBtn {
+                background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            }
         }
 
         #noBtn:hover {
@@ -150,11 +187,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: #fcb69f;
             z-index: 1000;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .celebration {
+                background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            }
         }
 
         .celebration.active {
@@ -291,11 +334,13 @@
     </footer>
 
     <script>
-        // Create floating hearts background
+        // Create floating hearts background - fewer hearts on mobile
         const heartBg = document.getElementById('heartBg');
         const heartEmojis = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+        const isMobile = window.innerWidth < 768;
+        const heartCount = isMobile ? 5 : 15; // Fewer hearts on mobile for better performance
         
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < heartCount; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart';
             heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
@@ -458,8 +503,9 @@
             // Track the YES answer
             trackAnswer('YES');
             
-            // Create explosion effect
-            for (let i = 0; i < 50; i++) {
+            // Create explosion effect - fewer confetti on mobile
+            const confettiCount = isMobile ? 25 : 50;
+            for (let i = 0; i < confettiCount; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + '%';
